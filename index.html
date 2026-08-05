@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preload" href="js/main.js" as="script" >
+    <link rel="preload" href="css/style.css" as="style" >
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.cdnfonts.com/css/inter" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/ibm-plex-mono" rel="stylesheet">
+</head>
+<body>
+    <header class="center">
+        <nav class="container flex">
+            <div class="flex gap-2">
+                <a href="index.html" class="enlace upper center">
+                    <h1>index.v1</h1>
+                </a>
+                <a href="index.html" class="enlace-c upper center">
+                    <p>database</p>
+                </a>
+            </div>
+            <div>
+
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="center">
+            <article class="container">
+                <div class="box-text">
+                    <h2 class="title-p"><span class="title-p-c">Registro</span> Mundial de Especies</h2>
+                    <p class="text-p">Interfaz de investigación minimalista para la visualización de datos biológicos de las criaturas más singulares del mundo. Sincronizada con PokéAPI v2.</p>
+                </div>
+            </article>
+            <article class="container box-filter gap-2 box-types">
+                <div class="center">
+                    <input type="text" name="searchPok" id="searchPok" placeholder="Buscar...">
+                </div>
+                <div class="flex-wrap" id="types">
+                </div>
+            </article>
+            <article class="container grid" id="container">
+            </article>
+            <article class="container center box-types notFound" id="not_found">
+                <p class="text-center">No se encontraron especímenes que coincidan con sus criterios de búsqueda.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer class="center footer">
+        <div class="container box-footer gap-2">
+            <div class="flex gap-2">
+                <div>
+                    <h2 class="upper footer-title">database status</h2>
+                    <p class="footer-text">Operational / 151 Records</p>
+                </div>
+                <div>
+                    <h2 class="upper footer-title">conection</h2>
+                    <p class="footer-text">Pokeapi.co Secure Link</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="upper footer-content">Built for fun and experience</h2>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
