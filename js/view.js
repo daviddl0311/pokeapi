@@ -20,7 +20,7 @@ function init() {
                     <span class='number'>${stats.base_stat}</span>
                 </div>
                 <div style='width: 100%;height: 5px; background-color:#222429; border-radius: 2rem; margin-top: .5rem'>
-                    <span style='border-radius: 2rem; width: ${stats.base_stat * 3.5}px; height: 5px; background-color: #F93A31; display: block'></span>
+                    <span style='border-radius: 2rem; width: ${stats.base_stat * 2}px; height: 5px; background-color: #F93A31; display: block'></span>
                 </div>
             </div>`
         )
