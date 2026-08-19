@@ -130,7 +130,6 @@ function searchPokemon(type) {
 }
 
 const noSearch = document.querySelector("#not_found");
-noSearch.style.display = "none";
 
 function viewCardsPokemon(type) {
     const pokemonCard = document.querySelectorAll(".card");
