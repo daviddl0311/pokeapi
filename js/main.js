@@ -13,12 +13,11 @@ async function init() {
 init();
 
 async function getPokemons() {
-    const arr = []
+    const promises = []
     for(let id = 1; id <= 151; id++) {
-        const pokemon = await request(id);
-        arr.push(pokemon);
+        promises.push(request(id));
     }
-    return arr;
+    return Promise.all(promises);
 }
 
 function renderPokemon(pokemons) {
@@ -68,11 +67,15 @@ export function getIdPokemon() {
 function getTypesPokemon(pokemons) {
     const typeContent = document.querySelector("#types");
     const fragment = document.createDocumentFragment();
-    let arrTypes = ["all types", "normal"];
+    let types = new Set(['all types', 'normal']);
+
     pokemons.forEach(pokemon => {
-        const pokemonTypes = pokemon.types
-            .map(type => arrTypes.includes(type.type.name) ? '' : arrTypes.push(type.type.name));
+        pokemon.types.forEach(type => {
+            types.add(type.type.name);
+        });
     });
+
+    const arrTypes = [... types];
 
     arrTypes.forEach(type => {
         let create = document.createElement("span");
@@ -132,31 +135,35 @@ noSearch.style.display = "none";
 function viewCardsPokemon(type) {
     const pokemonCard = document.querySelectorAll(".card");
     const container = document.querySelector("#container");
-    let valueSearch = search.value.trim().toLowerCase();
+    const valueSearch = search.value.trim().toLowerCase();
+
     let hasMatch = false;
     
-    if(valueSearch == "") {
-        hasMatch = true;
-        hasMatch ? container.style.display = "" : "";
-        hasMatch ? noSearch.style.display = "none" : "";
-        return filterByType(type);
-    }
-    
     pokemonCard.forEach(card => {
-        let pokemonName = card.querySelector(".name-card").textContent.toLowerCase().split("");
-        let pokemonTypes = card.querySelectorAll(".type");
-        let arrTypes = []
-        pokemonTypes.forEach(typePokemon => arrTypes.push(typePokemon.textContent));
-        
-        if(type == "" || type == "all types") {
-            search.value.trim().toLowerCase().split("").every(element => pokemonName.includes(element)) ? hasMatch = true : card.style.display = "none";
-            search.value.trim().toLowerCase().split("").every(element => pokemonName.includes(element)) ? card.style.display = "grid" : card.style.display = "none";
-        } else {
-            search.value.trim().toLowerCase().split("").every(element => pokemonName.includes(element)) && arrTypes.includes(type) ? hasMatch = true : card.style.display = "none";
-            search.value.trim().toLowerCase().split("").every(element => pokemonName.includes(element)) && arrTypes.includes(type) ? card.style.display = "grid" : card.style.display = "none";
-        }
-    })
+        const pokemonName = card
+            .querySelector(".name-card")
+            .textContent
+            .toLowerCase();
 
-    !hasMatch ? container.style.display = "none" : container.style.display = "";
-    !hasMatch ? noSearch.style.display = "" : noSearch.style.display  = "none";
+        const pokemonTypes = [... card.querySelectorAll(".type")]
+            .map(type => type.textContent);
+        
+        const matchesName = pokemonName.includes(valueSearch);
+
+        const matchesType = 
+            type === "" ||
+            type === "all types" ||
+            pokemonTypes.includes(type);
+
+        const showCard = matchesName && matchesType;
+
+        card.style.display = showCard ? "grid" : "none";
+
+        if(showCard) {
+            hasMatch = true;
+        }
+    });
+
+    container.style.display = hasMatch ? "" : "none";
+    noSearch.style.display = hasMatch ? "none" : "";
 }

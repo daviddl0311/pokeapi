@@ -4,23 +4,32 @@ const params = new URLSearchParams(window.location.search);
 
 const id = params.get("id");
 
-const pokemon = await request(id);
-
 const view = document.querySelector("#viewPokemon");
 
-function init() {
+async function init() {
+    try {
+        const pokemon = await request(id);
+
+        renderPokemon(pokemon);
+
+    } catch(error) {
+        window.location.href = "index.html"; 
+    }
+}
+
+function renderPokemon(pokemon) {
     const typesPokemon = pokemon.types
         .map(type => `<span class='upper type'>${type.type.name}</span>`)
         .join("");
     const statPokemon = pokemon.stats
-        .map(stats =>
+        .map(stats => 
             `<div>
                 <div class='flex'>
                     <p class='upper poke-title-info'>${stats.stat.name.toUpperCase()}</p>
                     <span class='number-2'>${stats.base_stat}</span>
                 </div>
                 <div style='width: 100%;height: 5px; background-color:#222429; border-radius: 2rem; margin-top: .5rem'>
-                    <span style='border-radius: 2rem; width: ${stats.base_stat * 2}px; height: 5px; background-color: #F93A31; display: block'></span>
+                    <span style='border-radius: 2rem; width: ${Math.min(stats.base_stat, 100)}%; height: 5px; background-color: #F93A31; display: block'></span>
                 </div>
             </div>`
         )
